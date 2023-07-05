@@ -11,7 +11,7 @@ app = FastAPI()
 df = pd.read_csv("data_set/movies_clean.csv")
 
 
-#@app.get('/peliculas_idioma/{Idioma}')    # Se define el endpoint raiz en el decorador.
+@app.get('/peliculas_idioma/{Idioma}')    # Se define el endpoint raiz en el decorador.
 # Decorador = 
 # Endpoint = 'peliculas_idioma'. # Idioma=es 
 # Se ejecuta cuando se hace una solicitud GET a la raiz de la API
@@ -30,16 +30,13 @@ def peliculas_idioma(Idioma: str):
     respuesta = f"{cantidad_peliculas} cantidad de peliculas fueron estrenadas en {Idioma}"
     return respuesta
 
-#if __name__ == "__main__":
-    import uvicorn   # Biblioteca de python que ejecutará y servirá a la aplicación FastAPi
-    # Recibe las solictudes HTTP entrantes y enruta a la aplicación FastApi
-    uvicorn.run(app, host="0.0.0.0", port=8000)
 
-idiomas = "English"
-resultado1 = peliculas_idioma(idiomas)
-print(resultado1)
-# http://localhost:8000/?Idioma=English
+# idiomas = "English"
+# resultado1 = peliculas_idioma(idiomas)
+# print(resultado1)
 
+
+@app.get('/peliculas_duracion/{Pelicula}')
 def peliculas_duracion(Pelicula: str):
     pelicula_encontrada = df[df['title'] == Pelicula]
 
@@ -51,11 +48,11 @@ def peliculas_duracion(Pelicula: str):
     else:
         return f"No se encontró la película: {Pelicula}"
 
-# Ejemplo de uso
-resultado2 = peliculas_duracion("Toy Story")
-print(resultado2)
+# # Ejemplo de uso
+# resultado2 = peliculas_duracion("Toy Story")
+# print(resultado2)
 
-
+@app.get('/franquicia/{Franquicia}')
 def franquicia(Franquicia: str):
     franquicia_encontrada = df[df['belongs_to_collection'].fillna('') == Franquicia]
 
@@ -68,23 +65,25 @@ def franquicia(Franquicia: str):
     else:
         return f"No se encontró la franquicia: {Franquicia}"
 
-# Ejemplo de uso
-resultado3 = franquicia("Toy Story Collection")
-print(resultado3)
- 
+# # Ejemplo de uso
+# resultado3 = franquicia("Toy Story Collection")
+# print(resultado3)
+
+
+@app.get('/peliculas_pais/{Pais}')
 def peliculas_pais(Pais: str):
     peliculas_producidas = df[df['production_countries'].str.contains(Pais, na=False, case=False)]
     cantidad_peliculas = len(peliculas_producidas)
     
     return f"Se produjeron {cantidad_peliculas} películas en el país {Pais}"
 
-# Ejemplo de uso
-pais_input = "United States"
-resultado4 = peliculas_pais(pais_input)
-print(resultado4)
+# # Ejemplo de uso
+# pais_input = "United States"
+# resultado4 = peliculas_pais(pais_input)
+# print(resultado4)
 
 
-
+@app.get('/productoras_exitosas/{Productora}')
 def productoras_exitosas(Productora: str):
     peliculas_productora = df[df['production_companies'].str.contains(Productora, na=False, case=False)]
     cantidad_peliculas = len(peliculas_productora)
@@ -92,7 +91,20 @@ def productoras_exitosas(Productora: str):
     
     return f"La productora {Productora} ha tenido un revenue de {revenue_total} y ha realizado {cantidad_peliculas} películas"
 
-# Ejemplo de uso
-productora_input = "Warner Bros."
-resultado5 = productoras_exitosas(productora_input)
-print(resultado5)
+# # Ejemplo de uso
+# productora_input = "Warner Bros."
+# resultado5 = productoras_exitosas(productora_input)
+# print(resultado5)
+
+
+
+if __name__ == "__main__":
+    import uvicorn   # Biblioteca de python que ejecutará y servirá a la aplicación FastAPi
+    # Recibe las solictudes HTTP entrantes y enruta a la aplicación FastApi
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+
+# http://localhost:8000/peliculas_duracion/Titanic
+# http://localhost:8000/productoras_exitosas/Paramount
+
+
