@@ -91,20 +91,57 @@ def productoras_exitosas(Productora: str):
     
     return f"La productora {Productora} ha tenido un revenue de {revenue_total} y ha realizado {cantidad_peliculas} películas"
 
-# # Ejemplo de uso
-# productora_input = "Warner Bros."
-# resultado5 = productoras_exitosas(productora_input)
-# print(resultado5)
+# Ejemplo de uso
+productora_input = "Warner Bros."
+resultado5 = productoras_exitosas(productora_input)
+print(resultado5)
 
 
+def get_director(nombre_director, df):
+    director_movies = []
+    retorno_total = 0
 
-if __name__ == "__main__":
-    import uvicorn   # Biblioteca de python que ejecutará y servirá a la aplicación FastAPi
-    # Recibe las solictudes HTTP entrantes y enruta a la aplicación FastApi
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    for index, row in df.iterrows():
+        director = row['director']
+        movies = row['title']
+        release_date = row['release_date']
+        return_value = row['return']
+        budget = row['budget']
+        revenue = row['revenue']
+
+        if nombre_director == director:
+            director_movies.append({
+                'pelicula': movies,
+                'fecha_lanzamiento': release_date,
+                'retorno': return_value,
+                'costo': budget,
+                'ganancia': revenue
+            })
+            retorno_total += return_value
+
+    director_info = {
+        'retorno_total': retorno_total,
+        'peliculas_dirigidas': director_movies
+    }
+
+    return director_info
+
+director_name = 'Forest Whitaker'  # Nombre del director que deseas buscar
+director_info = get_director(director_name, df)  # 'df' es tu DataFrame con los datos de las películas
+
+print(director_info)
+
+# if __name__ == "__main__":
+#     import uvicorn   # Biblioteca de python que ejecutará y servirá a la aplicación FastAPi
+#     # Recibe las solictudes HTTP entrantes y enruta a la aplicación FastApi
+#     uvicorn.run(app, host="0.0.0.0", port=8000)
 
 
 # http://localhost:8000/peliculas_duracion/Titanic
 # http://localhost:8000/productoras_exitosas/Paramount
+# http://localhost:8000/director/director
+
+
+
 
 
