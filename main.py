@@ -21,7 +21,7 @@ df = pd.read_csv("data_set/movies_clean.csv")
 # Se crea la función con un argumento con la forma 'Idioma=es'
 def peliculas_idioma(Idioma: str):
     # Se filtra el DataFrame por el idioma especificado
-    peliculas_filtradas = df[df['spoken_languages'] == Idioma]
+    peliculas_filtradas = df[df['original_language'] == Idioma]
     
     # Se obtiene la cantidad de películas encontradas
     cantidad_peliculas = len(peliculas_filtradas)
@@ -91,13 +91,13 @@ def productoras_exitosas(Productora: str):
     
     return f"La productora {Productora} ha tenido un revenue de {revenue_total} y ha realizado {cantidad_peliculas} películas"
 
-# Ejemplo de uso
-productora_input = "Warner Bros."
-resultado5 = productoras_exitosas(productora_input)
-print(resultado5)
+# # Ejemplo de uso
+# productora_input = "Warner Bros."
+# resultado5 = productoras_exitosas(productora_input)
+# print(resultado5)
 
-
-def get_director(nombre_director, df):
+@app.get('/get_director/{nombre_director}')
+def get_director(nombre_director):
     director_movies = []
     retorno_total = 0
 
@@ -120,28 +120,25 @@ def get_director(nombre_director, df):
             retorno_total += return_value
 
     director_info = {
-        'retorno_total': retorno_total,
-        'peliculas_dirigidas': director_movies
+        'Retorno total': retorno_total,
+        'Peliculas dirigidas': director_movies
     }
 
     return director_info
 
-director_name = 'Forest Whitaker'  # Nombre del director que deseas buscar
-director_info = get_director(director_name, df)  # 'df' es tu DataFrame con los datos de las películas
+# # Ejemplo de uso
+# director_name = 'Forest Whitaker'  # Nombre del director que deseas buscar
+# director_info = get_director(director_name)  # 'df' es tu DataFrame con los datos de las películas
+# print(director_info)
 
-print(director_info)
+if __name__ == "__main__":
+    import uvicorn   # Biblioteca de python que ejecutará y servirá a la aplicación FastAPi
+    # Recibe las solictudes HTTP entrantes y enruta a la aplicación FastApi
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
-# if __name__ == "__main__":
-#     import uvicorn   # Biblioteca de python que ejecutará y servirá a la aplicación FastAPi
-#     # Recibe las solictudes HTTP entrantes y enruta a la aplicación FastApi
-#     uvicorn.run(app, host="0.0.0.0", port=8000)
-
-
+# http://localhost:8000/peliculas_idioma/en
 # http://localhost:8000/peliculas_duracion/Titanic
+# http://localhost:8000/franquicia/Toy%20Story%20Collection
+# http://localhost:8000/peliculas_pais/United%20States
 # http://localhost:8000/productoras_exitosas/Paramount
-# http://localhost:8000/director/director
-
-
-
-
-
+# http://localhost:8000/get_director/Forest%20Whitaker
