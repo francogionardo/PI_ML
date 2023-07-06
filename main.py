@@ -11,9 +11,7 @@ app = FastAPI()
 df = pd.read_csv("data_set/ds_clean.csv")
 
 
-@app.get('/peliculas_idioma/{Idioma}')    # Se define el endpoint raiz en el decorador.
-# Decorador = 
-# Endpoint = 'peliculas_idioma'. # Idioma=es 
+@app.get('/peliculas_idioma/{Idioma}')    
 # Se ejecuta cuando se hace una solicitud GET a la raiz de la API
 # Asi mismo, procesan las solicitudes desde el cliente y generan las respuestas correspondientes
 # desde el servidor
@@ -27,13 +25,21 @@ def peliculas_idioma(Idioma: str):
     cantidad_peliculas = len(peliculas_filtradas)
     
     # Se crea el diccionario de respuesta
-    respuesta = f"{cantidad_peliculas} cantidad de peliculas fueron estrenadas en {Idioma}"
-    return respuesta
+    respuesta = {
+        'idioma': Idioma,
+        'cantidad_peliculas': cantidad_peliculas
+        }
+    # Convertimos el diccionario a JSON
+    json_data = json.dumps(respuesta, indent=4)
+    
+    # Creamos la respuesta en JSON
+    
+    # Retornamos el contenido de la respuesta en formato JSON
+    return json_data
 
-
-# idiomas = "English"
-# resultado1 = peliculas_idioma(idiomas)
-# print(resultado1)
+# Ejemplo de uso
+resultado = peliculas_idioma('es')
+print(resultado)
 
 
 @app.get('/peliculas_duracion/{Pelicula}')
@@ -41,33 +47,53 @@ def peliculas_duracion(Pelicula: str):
     pelicula_encontrada = df[df['title'] == Pelicula]
 
     if not pelicula_encontrada.empty:
-        duracion = pelicula_encontrada['runtime'].values[0]
-        año = pelicula_encontrada['release_year'].values[0]
-        respuesta = f"{Pelicula}. Duración: {duracion}. Año: {año}"
-        return respuesta
+        duracion = pelicula_encontrada['runtime'].values[0].tolist()
+        año = pelicula_encontrada['release_year'].values[0].tolist()
+        respuesta = {
+            'pelicula': Pelicula,
+            'duracion': duracion,
+            'año': año
+        }
+
+        # Convertimos el diccionario a JSON
+        json_data = json.dumps(respuesta, indent=4)
+        
+        return json_data
     else:
         return f"No se encontró la película: {Pelicula}"
 
-# # Ejemplo de uso
-# resultado2 = peliculas_duracion("Toy Story")
-# print(resultado2)
+# Ejemplo de uso
+resultado2 = peliculas_duracion("Toy Story")
+print(resultado2)
 
 @app.get('/franquicia/{Franquicia}')
+
+
 def franquicia(Franquicia: str):
     franquicia_encontrada = df[df['belongs_to_collection'].fillna('') == Franquicia]
 
     if not franquicia_encontrada.empty:
         cantidad_peliculas = len(franquicia_encontrada)
-        ganancia_total = franquicia_encontrada['revenue'].sum()
-        ganancia_promedio = round(franquicia_encontrada['revenue'].mean())
+        ganancia_total = int(franquicia_encontrada['revenue'].sum())
+        ganancia_promedio = int(round(franquicia_encontrada['revenue'].mean()))
 
-        return f"La franquicia {Franquicia} posee {cantidad_peliculas} películas, una ganancia total de {ganancia_total} y una ganancia promedio de {ganancia_promedio}"
+        respuesta = {
+            'franquicia': Franquicia,
+            'cantidad_peliculas': cantidad_peliculas,
+            'ganancia_total': ganancia_total,
+            'ganancia_promedio': ganancia_promedio
+        }
+
+        # Convertimos el diccionario a JSON
+        json_data = json.dumps(respuesta, indent=4)
+
+        return json_data
     else:
         return f"No se encontró la franquicia: {Franquicia}"
 
-# # Ejemplo de uso
-# resultado3 = franquicia("Toy Story Collection")
-# print(resultado3)
+# Ejemplo de uso
+resultado3 = franquicia("Toy Story Collection")
+print(resultado3)
 
 
 @app.get('/peliculas_pais/{Pais}')
@@ -75,66 +101,75 @@ def peliculas_pais(Pais: str):
     peliculas_producidas = df[df['production_countries'].str.contains(Pais, na=False, case=False)]
     cantidad_peliculas = len(peliculas_producidas)
     
-    return f"Se produjeron {cantidad_peliculas} películas en el país {Pais}"
+    data = {
+        "pais": Pais,
+        "cantidad_peliculas_producidas": cantidad_peliculas
+    }
 
-# # Ejemplo de uso
-# pais_input = "United States"
-# resultado4 = peliculas_pais(pais_input)
-# print(resultado4)
+    # Convertimos el diccionario a JSON
+    json_data = json.dumps(data, indent=4)
+
+    return json_data
+
+# Ejemplo de uso
+pais_input = "United States"
+resultado4 = peliculas_pais(pais_input)
+print(resultado4)
 
 
 @app.get('/productoras_exitosas/{Productora}')
 def productoras_exitosas(Productora: str):
     peliculas_productora = df[df['production_companies'].str.contains(Productora, na=False, case=False)]
-    cantidad_peliculas = len(peliculas_productora)
-    revenue_total = peliculas_productora['revenue'].sum()
-    
-    return f"La productora {Productora} ha tenido un revenue de {revenue_total} y ha realizado {cantidad_peliculas} películas"
+    cantidad_peliculas = int(len(peliculas_productora))
+    revenue_total = int(peliculas_productora['revenue'].sum())
 
-# # Ejemplo de uso
-# productora_input = "Warner Bros."
-# resultado5 = productoras_exitosas(productora_input)
-# print(resultado5)
-
-@app.get('/get_director/{nombre_director}')
-def get_director(nombre_director):
-    director_movies = []
-    retorno_total = 0
-
-    for index, row in df.iterrows():
-        director = row['director']
-        movies = row['title']
-        release_date = row['release_date']
-        return_value = row['return']
-        budget = row['budget']
-        revenue = row['revenue']
-
-        if nombre_director == director:
-            director_movies.append({
-                'pelicula': movies,
-                'fecha_lanzamiento': release_date,
-                'retorno': return_value,
-                'costo': budget,
-                'ganancia': revenue
-            })
-            retorno_total += return_value
-
-    director_info = {
-        'Retorno total': retorno_total,
-        'Peliculas dirigidas': director_movies
+    respuesta = {
+        'productora': Productora,
+        'revenue_total': revenue_total,
+        'cantidad_peliculas': cantidad_peliculas
     }
 
-    return director_info
+    json_data = json.dumps(respuesta, indent=4)
+    return json_data
 
-# # Ejemplo de uso
-# director_name = 'Forest Whitaker'  # Nombre del director que deseas buscar
-# director_info = get_director(director_name)  # 'df' es tu DataFrame con los datos de las películas
-# print(director_info)
+# Ejemplo de uso
+productora_input = "Warner Bros."
+resultado5 = productoras_exitosas(productora_input)
+print(resultado5)
 
-if __name__ == "__main__":
-    import uvicorn   # Biblioteca de python que ejecutará y servirá a la aplicación FastAPi
-    # Recibe las solictudes HTTP entrantes y enruta a la aplicación FastApi
-    uvicorn.run(app, host="0.0.0.0", port=10000)
+@app.get('/get_director/{nombre_director}')
+def get_director(director: str):
+    # Creamos un dataset nuevo aplicando el filtro del director y que no este vacio
+    df1 = df[df['director'].notna() & df['director'].str.contains(director)]
+    # Sumamos los retornos del director
+    retorno_dir = df1['return'].sum() 
+    cantidad_peliculas = df1.shape[0]    
+    data = {
+        "director": director,
+        "retorno del director": retorno_dir,
+        "total de peliculas dirigidas": cantidad_peliculas,
+        "peliculas": [{
+            "titulo": df1["title"].tolist(),
+            "estreno": df1["release_date"].tolist(),
+            "retorno": df1["return"].tolist(),
+            "presupuesto": df1["budget"].tolist(),
+            "ganancias": df1["revenue"].tolist(),
+        }]
+    }
+    # Convert the data dictionary to a JSON string with proper indentation
+    json_data = json.dumps(data, indent=4)    
+    
+    return json_data
+
+# Ejemplo de uso
+director_name = 'Forest Whitaker'  # Nombre del director que deseas buscar
+director_info = get_director(director_name)  # 'df' es tu DataFrame con los datos de las películas
+print(director_info)
+
+# if __name__ == "__main__":
+#     import uvicorn   # Biblioteca de python que ejecutará y servirá a la aplicación FastAPi
+#     # Recibe las solictudes HTTP entrantes y enruta a la aplicación FastApi
+#     uvicorn.run(app, host="0.0.0.0", port=10000)
 
 # http://localhost:10000/peliculas_idioma/en
 # http://localhost:10000/peliculas_duracion/Titanic
