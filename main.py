@@ -8,7 +8,7 @@ import json
 app = FastAPI()
 
 # Se ingestan los datos y se crea un dataframe
-df = pd.read_csv("data_set/movies_clean.csv")
+df = pd.read_csv("data_set/ds_clean.csv")
 
 
 @app.get('/peliculas_idioma/{Idioma}')    # Se define el endpoint raiz en el decorador.
