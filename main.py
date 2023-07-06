@@ -134,11 +134,11 @@ def get_director(nombre_director):
 if __name__ == "__main__":
     import uvicorn   # Biblioteca de python que ejecutará y servirá a la aplicación FastAPi
     # Recibe las solictudes HTTP entrantes y enruta a la aplicación FastApi
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=10000)
 
-# http://localhost:8000/peliculas_idioma/en
-# http://localhost:8000/peliculas_duracion/Titanic
-# http://localhost:8000/franquicia/Toy%20Story%20Collection
-# http://localhost:8000/peliculas_pais/United%20States
-# http://localhost:8000/productoras_exitosas/Paramount
-# http://localhost:8000/get_director/Forest%20Whitaker
+# http://localhost:10000/peliculas_idioma/en
+# http://localhost:10000/peliculas_duracion/Titanic
+# http://localhost:10000/franquicia/Toy%20Story%20Collection
+# http://localhost:10000/peliculas_pais/United%20States
+# http://localhost:10000/productoras_exitosas/Paramount
+# http://localhost:10000/get_director/Forest%20Whitaker
