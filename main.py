@@ -31,15 +31,12 @@ def peliculas_idioma(Idioma: str):
         }
     # Convertimos el diccionario a JSON
     json_data = json.dumps(respuesta, indent=4)
-    
-    # Creamos la respuesta en JSON
-    
-    # Retornamos el contenido de la respuesta en formato JSON
-    return json_data
+    response = Response(content=json_data, media_type="application/json")    
+    return response
 
-# Ejemplo de uso
-resultado = peliculas_idioma('es')
-print(resultado)
+# # Ejemplo de uso
+# resultado = peliculas_idioma('es')
+# print(resultado)
 
 
 @app.get('/peliculas_duracion/{Pelicula}')
@@ -47,24 +44,27 @@ def peliculas_duracion(Pelicula: str):
     pelicula_encontrada = df[df['title'] == Pelicula]
 
     if not pelicula_encontrada.empty:
-        duracion = pelicula_encontrada['runtime'].values[0].tolist()
-        año = pelicula_encontrada['release_year'].values[0].tolist()
+        duracion = pelicula_encontrada['runtime'].item()
+        año = pelicula_encontrada['release_year'].item()
         respuesta = {
             'pelicula': Pelicula,
-            'duracion': duracion,
-            'año': año
-        }
+            'duracion_min': duracion,
+            'año':año
+        } 
 
         # Convertimos el diccionario a JSON
-        json_data = json.dumps(respuesta, indent=4)
-        
-        return json_data
+        # Convertimos el diccionario a JSON con ensure_ascii=False
+        json_data = json.dumps(respuesta, indent=4, ensure_ascii=False)
+        response = Response(content=json_data, media_type="application/json")    
+                
+        return response
     else:
         return f"No se encontró la película: {Pelicula}"
 
-# Ejemplo de uso
-resultado2 = peliculas_duracion("Toy Story")
-print(resultado2)
+# # Ejemplo de uso
+# resultado2 = peliculas_duracion("Toy Story")
+# print(resultado2)
+
 
 @app.get('/franquicia/{Franquicia}')
 
@@ -86,14 +86,15 @@ def franquicia(Franquicia: str):
 
         # Convertimos el diccionario a JSON
         json_data = json.dumps(respuesta, indent=4)
+        response = Response(content=json_data, media_type="application/json")
 
-        return json_data
+        return response
     else:
         return f"No se encontró la franquicia: {Franquicia}"
 
-# Ejemplo de uso
-resultado3 = franquicia("Toy Story Collection")
-print(resultado3)
+# # Ejemplo de uso
+# resultado3 = franquicia("Toy Story Collection")
+# print(resultado3)
 
 
 @app.get('/peliculas_pais/{Pais}')
@@ -108,13 +109,14 @@ def peliculas_pais(Pais: str):
 
     # Convertimos el diccionario a JSON
     json_data = json.dumps(data, indent=4)
+    response = Response(content=json_data, media_type="application/json")    
 
-    return json_data
+    return response
 
-# Ejemplo de uso
-pais_input = "United States"
-resultado4 = peliculas_pais(pais_input)
-print(resultado4)
+# # Ejemplo de uso
+# pais_input = "United States"
+# resultado4 = peliculas_pais(pais_input)
+# print(resultado4)
 
 
 @app.get('/productoras_exitosas/{Productora}')
@@ -130,14 +132,15 @@ def productoras_exitosas(Productora: str):
     }
 
     json_data = json.dumps(respuesta, indent=4)
-    return json_data
+    response = Response(content=json_data, media_type="application/json")    
+    return response
 
-# Ejemplo de uso
-productora_input = "Warner Bros."
-resultado5 = productoras_exitosas(productora_input)
-print(resultado5)
+# # Ejemplo de uso
+# productora_input = "Warner Bros."
+# resultado5 = productoras_exitosas(productora_input)
+# print(resultado5)
 
-@app.get('/get_director/{nombre_director}')
+@app.get('/get_director/{director}')
 def get_director(director: str):
     # Creamos un dataset nuevo aplicando el filtro del director y que no este vacio
     df1 = df[df['director'].notna() & df['director'].str.contains(director)]
@@ -157,22 +160,23 @@ def get_director(director: str):
         }]
     }
     # Convert the data dictionary to a JSON string with proper indentation
-    json_data = json.dumps(data, indent=4)    
+    json_data = json.dumps(data, indent=4)
+    response = Response(content=json_data, media_type="application/json")    
     
-    return json_data
+    return response
 
-# Ejemplo de uso
-director_name = 'Forest Whitaker'  # Nombre del director que deseas buscar
-director_info = get_director(director_name)  # 'df' es tu DataFrame con los datos de las películas
-print(director_info)
+# # Ejemplo de uso
+# director_name = 'Forest Whitaker'  # Nombre del director que deseas buscar
+# director_info = get_director(director_name)  # 'df' es tu DataFrame con los datos de las películas
+# print(director_info)
 
-# if __name__ == "__main__":
-#     import uvicorn   # Biblioteca de python que ejecutará y servirá a la aplicación FastAPi
-#     # Recibe las solictudes HTTP entrantes y enruta a la aplicación FastApi
-#     uvicorn.run(app, host="0.0.0.0", port=10000)
+if __name__ == "__main__":
+    import uvicorn   # Biblioteca de python que ejecutará y servirá a la aplicación FastAPi
+    # Recibe las solictudes HTTP entrantes y enruta a la aplicación FastApi
+    uvicorn.run(app, host="0.0.0.0", port=10000)
 
 # http://localhost:10000/peliculas_idioma/en
-# http://localhost:10000/peliculas_duracion/Titanic
+# http://localhost:10000/peliculas_duracion/Toy%20Story
 # http://localhost:10000/franquicia/Toy%20Story%20Collection
 # http://localhost:10000/peliculas_pais/United%20States
 # http://localhost:10000/productoras_exitosas/Paramount
