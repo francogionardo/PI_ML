@@ -149,13 +149,13 @@ def get_director(director: str):
     cantidad_peliculas = df1.shape[0]    
     data = {
         "director": director,
-        "retorno del director": retorno_dir,
-        "total de peliculas dirigidas": cantidad_peliculas,
+        "retorno_total": retorno_dir,
+        "peliculas_dirigidas": cantidad_peliculas,
         "peliculas": [{
             "titulo": df1["title"].tolist(),
             "estreno": df1["release_date"].tolist(),
             "retorno": df1["return"].tolist(),
-            "presupuesto": df1["budget"].tolist(),
+            "costo": df1["budget"].tolist(),
             "ganancias": df1["revenue"].tolist(),
         }]
     }
