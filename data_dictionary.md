@@ -24,5 +24,8 @@
 - video: Indica si hay o no un trailer en video disponible en TMDB
 - vote_average: Puntaje promedio de reseñas de la pelicula
 - vote_count: Numeros de votos recibidos por la pelicula, en TMDB
+- cast:  Actores que participaron en la película
+- crew: Equipo técnico encargado de la realización de la película
+- release_year: Año de publicación de la película
 - return: ratio de ganancia o proporción entre revenue/budget
 - director: Encargado de la dirección de la película 

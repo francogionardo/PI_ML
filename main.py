@@ -152,10 +152,10 @@ def get_director(director: str):
         "retorno_total": retorno_dir,
         "peliculas_dirigidas": cantidad_peliculas,
         "peliculas": [{
-            "titulo": df1["title"].tolist(),
-            "estreno": df1["release_date"].tolist(),
-            "retorno": df1["return"].tolist(),
-            "costo": df1["budget"].tolist(),
+            "titulos": df1["title"].tolist(),
+            "estrenos": df1["release_date"].tolist(),
+            "retornos": df1["return"].tolist(),
+            "costos": df1["budget"].tolist(),
             "ganancias": df1["revenue"].tolist(),
         }]
     }
