@@ -1,12 +1,16 @@
-<h1 align='center'>
-  <img src="Image/logo.png" alt="Logo del Proyecto" /><br>
-   Deployment de un Modelo de Clasificación para un Sistema de Recomendación de Películas
-   
-    
+<h1 align='center' style="font-weight:light; text-align:justify; margin-left: 80px; margin-right: 100px;">
+  Desarrollo de un Modelo de Clasificación para un Sistema de Recomendación de Películas
 </h1>
-<h2 align='center'
->
-Proyecto Individual I
+
+<p align="center">
+  <img src="Image/logo.png" alt="Logo del Proyecto" style="float:right; width:80px;" />
+</p>
+
+<h2 align='center'>
+  Proyecto Individual I 🎬🍿
+</h2>
+
+
 
 ## Introducción:
 
@@ -14,16 +18,16 @@ En este proyecto de Machine Learning, asumiré el rol de un Data Engineer y ML O
 
 ## Definción de objetivos del proyecto:
 ---
-1. **Generación de API´s que procesan funciones que responden a consultas acerca de las características de películas**: El entregable esta etapa, se exploran los datos disponibles, se realiza un análisis de calidad y se lleva a cabo la limpieza necesaria para prepararlos para el modelado.
+1. **Generación de API´s que procesan funciones que responden a consultas acerca de características de películas**
 
-2. **Deployment de un modelo de clasificación par un sistema de recomendación de películas**: Aquí se seleccionan las características relevantes para el modelo y se pueden crear nuevas características a partir de las existentes, como la tokenización de texto o la extracción de características numéricas.
+2. **Deployment de un modelo de clasificación para un sistema de recomendación de películas**
 
 ---
 ## Resumen de los procesos:
 ---
 ### 1. Proceso de Extracción, Transformación, Carga ( _enlace:_ [ETL ](https://github.com/abelfranco/PI_ML/blob/master/ETL.ipynb))
 
-En el archivo **ETL.py**, se llevó a cabo el proceso de extracción de datos de dos fuentes, la transformación de los datos para su limpieza y preprocesamiento, y finalmente la carga de los datos en un formato adecuado (archivo **ds_clean.csv**) para su posterior análisis y entrenamiento del modelo.
+En el archivo **ETL.py**, se llevó a cabo el proceso de extracción de datos de dos fuentes, la transformación de los datos para su limpieza y preprocesamiento, y finalmente la carga de los datos en un formato adecuado (archivo **ds_clean.csv**) para su posterior análisis y entrenamiento del modelo. (tambien ver **data_dictionary.md**)
 
 ### 2. Análisis Exploratorio de Datos ( _enlace:_ [EDA ](https://github.com/abelfranco/PI_ML/blob/master/EDA.ipynb))
 
@@ -40,11 +44,44 @@ En el archivo **model.py**, se implementará un modelo de Machine Learning utili
 ---
 - _"Cada etapa fué realizada de manera sistemática y documentada adecuadamente en los archivos correspondientes, siguiendo las mejores prácticas de ciencia de datos y ML Operations, para garantizar la reproducibilidad, calidad y mantenibilidad del proyecto"_
 ---
-## Stack Tecnológico
-- Scikit learn:
-- Python:
-- Numpy:
-- Pandas:
-- FastAPI:
-- Uvicorn:
-- Render:
+
+<div style="display:flex; align-items:center;">
+  <div style="width:50%; padding-right:20px;">
+    <h2>Herramientas Utilizadas</h2>
+    <ul style="text-align: justify;">
+      <li><b>📊 Scikit Learn</b>: Utilizado para vectorizar, tokenizar y calcular la similitud coseno.</li>
+      <li><b>🐍Python</b>: Lenguaje de programación principal utilizado en el desarrollo del proyecto.</li>
+      <li><b>💻Numpy</b>: Utilizado para realizar operaciones numéricas y manipulación de datos.</li>
+      <li><b>🐼Pandas</b>: Utilizado para la manipulación y análisis de datos estructurados.</li>
+      <li><b>📈Matplotlib</b>: Utilizado para la visualización de datos y generación de gráficos.</li>
+      <li><b>📳FastAPI</b>: Utilizado para crear la interfaz de la aplicación y procesar los parámetros de funciones.</li>
+      <li><b>🦄Uvicorn</b>: Servidor ASGI utilizado para ejecutar la aplicación FastAPI.</li>
+      <li><b>🌐Render</b>: Plataforma utilizada para el despliegue del modelo y la aplicación.</li>
+    </ul>
+  </div>
+  <div style="width:50%; text-align:center;">
+    <figure>
+      <img src="Image/infograph.jpg" alt="Ejemplo del deployment usando Heroku(Render)" style="margin-left:auto; margin-right:auto;" />
+      <figcaption style="font-size: smaller; font-style: italic; text-align: center;">Descripción del despliegue de una aplicación desde un repositorio en GitHub usando Heroku (similar a Render)</figcaption>
+    </figure>
+  </div>
+</div>
+
+## Links
+
+- [API´s de consultas de películas y modelo de sistema de recomendación](https://movies-recomendation-system-bgw9.onrender.com/docs#/)
+- [Videotutorial del trabajo realizado en YouTube](#)
+
+## Recomendaciones
+
+- Al hacer las consultas Usar la primera letra de cada palabra en mayusculas.
+- No hacer uso de caracteres especiales.
+- Para la función `peliculas_idioma`, ingresar solamente las abreviaturas del idioma (por ejemplo, "inglés" sería "en").
+
+## Autor
+
+Abel Franco Ccapa
+
+- Correo electrónico: franco.gionardo@gmail.com
+
+- LinkedIn: [Perfil de LinkedIn](https://www.linkedin.com/in/abelfrancoccapa)
