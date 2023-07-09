@@ -175,11 +175,22 @@ if __name__ == "__main__":
     # Recibe las solictudes HTTP entrantes y enruta a la aplicación FastApi
     uvicorn.run(app, host="0.0.0.0", port=10000)
 
+from model import obtener_recomendaciones
+
+# Decorador para definir la ruta y el método HTTP
+@app.get('/obtener_recomendaciones/{nombre_pelicula}')
+def obtener_recomendaciones(nombre_pelicula: str):
+    recomendaciones = obtener_recomendaciones(nombre_pelicula)
+    return {"recomendaciones": recomendaciones}
+
+# Simular búsqueda de "Toy Story"
 # http://localhost:10000/peliculas_idioma/en
 # http://localhost:10000/peliculas_duracion/Toy%20Story
 # http://localhost:10000/franquicia/Toy%20Story%20Collection
 # http://localhost:10000/peliculas_pais/United%20States
 # http://localhost:10000/productoras_exitosas/Paramount
 # http://localhost:10000/get_director/Forest%20Whitaker
+# http://localhost:10000/recomendaciones/Toy%20Story
+
 
 # https://movies-recomendation-system-bgw9.onrender.com/docs#/
