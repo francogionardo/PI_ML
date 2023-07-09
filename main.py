@@ -197,5 +197,5 @@ if __name__ == "__main__":
 # http://localhost:10000/recomendacion/Titanic
 
 
-
+# Enlace de RENDER del modelo deployado
 # https://movies-recomendation-system-bgw9.onrender.com/docs#/
