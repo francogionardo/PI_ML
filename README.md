@@ -16,7 +16,7 @@
 
 En este proyecto de Machine Learning, asumiré el rol de un Data Engineer y ML Operations y llevaré a cabo todos los procesos necesarios, desde el tratamiento y recolección de datos hasta el entrenamiento y despliegue del modelo de ML. El objetivo principal es desarrollar un sistema de recomendación de películas basado en técnicas de similitud y algoritmos de Machine Learning.
 
-## Definción de objetivos del proyecto:
+## Objetivos del proyecto:
 ---
 1. **Generación de API´s que procesan funciones que responden a consultas acerca de características de películas**
 
