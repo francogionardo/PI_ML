@@ -2,14 +2,15 @@ from fastapi import FastAPI   # framework para crear API's
 from fastapi import Response  # Clase que se usa para enviar respuestas desde los endpoints
 import pandas as pd
 import json
-
+import numpy as np
+from model import recomendacion
 # Se instancia el APi (Framework de python)
 # El API define las rutas, los metodos HTTP, y las fucniones asociadas para el manejo de solicitudes
 app = FastAPI()
 
 # Se ingestan los datos y se crea un dataframe
 df = pd.read_csv("data_set/ds_clean.csv")
-
+df1 = pd.read_csv("data_set/ds_model.csv")
 
 @app.get('/peliculas_idioma/{Idioma}')    
 # Se ejecuta cuando se hace una solicitud GET a la raiz de la API
@@ -170,18 +171,21 @@ def get_director(director: str):
 # director_info = get_director(director_name)  # 'df' es tu DataFrame con los datos de las películas
 # print(director_info)
 
+
+'''Funcion'''
+@app.get('/recomendacion/{nombre_pelicula}')
+def recomendacion_endpoint(nombre_pelicula: str):
+    
+    similar_movies = recomendacion(nombre_pelicula)
+    return similar_movies
+
+# name = recomendacion("Toy Story")
+# print (name)
+
 if __name__ == "__main__":
     import uvicorn   # Biblioteca de python que ejecutará y servirá a la aplicación FastAPi
     # Recibe las solictudes HTTP entrantes y enruta a la aplicación FastApi
     uvicorn.run(app, host="0.0.0.0", port=10000)
-
-from model import obtener_recomendaciones
-
-# Decorador para definir la ruta y el método HTTP
-@app.get('/obtener_recomendaciones/{nombre_pelicula}')
-def obtener_recomendaciones(nombre_pelicula: str):
-    recomendaciones = obtener_recomendaciones(nombre_pelicula)
-    return {"recomendaciones": recomendaciones}
 
 # Simular búsqueda de "Toy Story"
 # http://localhost:10000/peliculas_idioma/en
@@ -190,7 +194,8 @@ def obtener_recomendaciones(nombre_pelicula: str):
 # http://localhost:10000/peliculas_pais/United%20States
 # http://localhost:10000/productoras_exitosas/Paramount
 # http://localhost:10000/get_director/Forest%20Whitaker
-# http://localhost:10000/recomendaciones/Toy%20Story
+# http://localhost:10000/recomendacion/Titanic
+
 
 
 # https://movies-recomendation-system-bgw9.onrender.com/docs#/

@@ -1,3 +1,5 @@
+### IMPORTAMOS LIBRERIAS
+
 import pandas as pd
 import numpy  as np
 
@@ -10,77 +12,39 @@ from sklearn.utils.extmath           import randomized_svd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise        import linear_kernel
 
+# Ingestamos
 
-df = pd.read_csv("data_set/ds_model.csv")
+data = pd.read_csv("data_set/ds_model.csv")
 
-import nltk
-from nltk.tokenize import word_tokenize
+      ### CREACION DEL MODELO DE RECOMENDACIONES ### 
 
-# Descargar los recursos necesarios de NLTK (ejecutar solo una vez)
-nltk.download('punkt')
+muestra_aleatoria = data.head(5000) # Utilizamos solo 20 mil filas del datasets 
 
-# Muestra de datos
-overview_sample = "Led by Woody, Andy's toys live happily in his ..."
+tfidf = TfidfVectorizer(stop_words='english') #Convertimos el texto en una matriz de caracteristicas numericas para facilitar el calculo de similitudes
 
-# Tokenización de la muestra
-tokens = word_tokenize(overview_sample)
 
-# Descargar los recursos necesarios de NLTK (ejecutar solo una vez)
-nltk.download('punkt')
+tdfid_matrix = tfidf.fit_transform(muestra_aleatoria['overview']) # Analizamos y extraemos las palabras mas importantes con TF-IDF Y creamos una matriz que representa la
 
-# Tokenización de la columna "overview"
-df['overview_tokens'] = df['overview'].apply(lambda x: word_tokenize(str(x)))
 
-# Tokenización de la columna "title"
-df['title_tokens'] = df['title'].apply(lambda x: word_tokenize(str(x)))
+cosine_similarity = linear_kernel( tdfid_matrix, tdfid_matrix) # Calculamos la similitud coseno entre todas las descripciones la similitud coseno 
+                                                                 # es una medida que nos indica cuanto se parecen dos vectores 
+def recomendacion(titulo: str):
+    idx = muestra_aleatoria[muestra_aleatoria['title'] == titulo].index[0] # Buscamos el indice titulo en nuestro datasets
 
-''' Vectorización'''
-
-from sklearn.feature_extraction.text import CountVectorizer
-
-# Reemplazar los valores nulos en la columna 'overview' con un valor predeterminado
-df['overview'].fillna('Sin descripción', inplace=True)
-
-# Crear una instancia del vectorizador de Bolsa de Palabras con límite máximo de características
-vectorizer = CountVectorizer(max_features=100)
-
-# Realizar la tokenización y vectorización de la columna 'overview'
-overview_vectors = vectorizer.fit_transform(df['overview_tokens'].apply(lambda x: ' '.join(x)))
-
-# Crear el DataFrame con los vectores de Bolsa de Palabras
-overview_df = pd.DataFrame(overview_vectors.toarray(), columns=vectorizer.get_feature_names_out())
-
-# Concatenar el DataFrame de características con el DataFrame original
-df_with_features = pd.concat([df, overview_df], axis=1)
-
-''' Entrenamiento '''
-
-from sklearn.metrics.pairwise import cosine_similarity
-
-# Calcular la similitud del coseno entre las películas
-similarity_matrix = cosine_similarity(overview_df)
-
-# Ejemplo de recomendación de películas
-movie_index = 0  # Índice de la película de referencia
-similar_movies = similarity_matrix[movie_index].argsort()[::-1]  # Películas más similares
-recommended_movies = similar_movies[1:11]  # Películas recomendadas (excluyendo la película de referencia)
-
-'''Funcion'''
-
-def obtener_recomendaciones(nombre_pelicula):
-    # Obtener el índice de la película de referencia
-    indice_pelicula = df[df['title'] == nombre_pelicula].index[0]
+    sim_cosine = list(enumerate(cosine_similarity[idx])) # Accedemos a la fila 'idx' de la matriz 'simitulud coseno' enumeramos filas, creamos lista de 
+                                                             #tuplas, donde cada tupla contiene el indice y similitud coseno de la pelicula
     
-    # Obtener la fila correspondiente a la película de referencia en la matriz de similitud
-    similitudes_pelicula = similarity_matrix[indice_pelicula]
+
+    sim_scores = sorted(sim_cosine, key=lambda x: x[1], reverse=True) # Ordenamos la lista de tuplas en funcion de la similitud coseno de manera descendente,
+                                                                         #guardamos resultados en variable sim_scores
     
-    # Obtener los índices de las 5 películas más similares (excluyendo la película de referencia)
-    indices_recomendadas = similitudes_pelicula.argsort()[-6:-1][::-1]
+
+    similar_indices = [i for i, _ in sim_scores[1:6]] # Creamos lista de las 5 mejores primeras peliculas
+
+    similar_movies = muestra_aleatoria['title'].iloc[similar_indices].values.tolist() # Seleccionamos los titulos segun los indices y los pasamos a una lista
     
-    # Crear una lista con los títulos de las películas recomendadas
-    peliculas_recomendadas = []
-    for indice in indices_recomendadas:
-        titulo = df.loc[indice, 'title']
-        peliculas_recomendadas.append(titulo)
-    
-    return peliculas_recomendadas
+    return similar_movies #Retornamos la lista
+
+
+# name = recomendacion('Toy Story')
+# print (name)
