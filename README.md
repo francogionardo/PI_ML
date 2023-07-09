@@ -1,41 +1,50 @@
 <h1 align='center'>
- <b>Proyecto  Individual I</b>
+  <img src="Image/logo.png" alt="Logo del Proyecto" /><br>
+   Deployment de un Modelo de Clasificación para un Sistema de Recomendación de Películas
+   
+    
 </h1>
+<h2 align='center'
+>
+Proyecto Individual I
 
-***
-<h1 align='center'>
-<b>Movie Recommendation
-🎬🍿</b>
-</h1>
+## Introducción:
 
-<p align="center">
-  <img src="Image/logo.png" />
-</p>
+En este proyecto de Machine Learning, asumiré el rol de un Data Engineer y ML Operations y llevaré a cabo todos los procesos necesarios, desde el tratamiento y recolección de datos hasta el entrenamiento y despliegue del modelo de ML. El objetivo principal es desarrollar un sistema de recomendación de películas basado en técnicas de similitud y algoritmos de Machine Learning.
 
-***
-En este proyecto de Machine Learning, asumiré el rol de un Data Engineer y ML Operations y llevaré a cabo todos los procesos necesarios, desde el tratamiento y recolección de datos hasta el entrenamiento y deployment del modelo de ML. 
+## Definción de objetivos del proyecto:
+---
+1. **Generación de API´s que procesan funciones que responden a consultas acerca de las características de películas**: El entregable esta etapa, se exploran los datos disponibles, se realiza un análisis de calidad y se lleva a cabo la limpieza necesaria para prepararlos para el modelado.
 
-El proyecto se dividirá en etapas que incluyen: exploración y limpieza de datos, selección y creación de características, elección y ajuste de algoritmos de ML, evaluación y validación del modelo, y finalmente, implementación en un entorno de producción. Cada etapa será realizada de manera sistemática y documentada adecuadamente en los archivos ETL y EDA, siguiendo las mejores prácticas de ciencia de datos, para garantizar la reproducibilidad y calidad del proyecto.
+2. **Deployment de un modelo de clasificación par un sistema de recomendación de películas**: Aquí se seleccionan las características relevantes para el modelo y se pueden crear nuevas características a partir de las existentes, como la tokenización de texto o la extracción de características numéricas.
 
-**Proceso de Extracción, Transformación, Carga (ETL)**: En el archivo _ETL.py_, se llevó a cabo el proceso de extracción de datos de diversas fuentes, la transformación de los datos para su limpieza y preparación, y finalmente la carga de los datos en un formato adecuado ( archivo _movies_final.csv_) para su posterior análisis y entrenamiento del modelo.
+---
+## Resumen de los procesos:
+---
+### 1. Proceso de Extracción, Transformación, Carga ( _enlace:_ [ETL ](https://github.com/abelfranco/PI_ML/blob/master/ETL.ipynb))
 
-**Análisis Exploratorio de Datos (EDA)**: En el notebook _EDA.ipynb_, se realizará un análisis exhaustivo de los datos recopilados. Esto incluirá la visualización de los datos, la identificación de patrones, la detección de valores atípicos y la generación de ideas y preguntas relevantes para el problema que estamos abordando.
+En el archivo **ETL.py**, se llevó a cabo el proceso de extracción de datos de dos fuentes, la transformación de los datos para su limpieza y preprocesamiento, y finalmente la carga de los datos en un formato adecuado (archivo **ds_clean.csv**) para su posterior análisis y entrenamiento del modelo.
 
-**Implementación de la Interfaz (main)**: En el archivo _main.py_, se creará una interfaz utilizando la biblioteca FastAPI. Esta interfaz permitirá a los usuarios interactuar con el modelo de machine learning, proporcionando los datos de entrada necesarios y obteniendo las predicciones correspondientes.
+### 2. Análisis Exploratorio de Datos ( _enlace:_ [EDA ](https://github.com/abelfranco/PI_ML/blob/master/EDA.ipynb))
 
-**Desarrollo del Modelo de Machine Learning (ml_model)**: En el archivo _ml_model.py_, se implementará un modelo de machine learning utilizando el algoritmo de vecinos más cercanos (K-Nearest Neighbors). Este modelo se entrenará utilizando los datos recopilados y preparados en las etapas anteriores.
+En el notebook **EDA.ipynb**, se realizará un **`INFORME`** de Análisis exhaustivo de los datos y la factiblidad de modelos de clasificación para el caso en estudio. Esto incluirá la visualización de los datos, reducción de dimensionalidad, tratamiento de valores atípicos y la generación de conclusiones relevantes entorno a las variables y la elección del modelo.
 
-#### **Stack Tecnológico**
+### 3. Implementación de API´s ( _enlace:_ [main.py ](https://github.com/abelfranco/PI_ML/blob/master/main.py))
 
-- Python : Lenguaje base del proyecto
-- Numpy : Transformación de datos
-- Pandas : Ingesta y transformación de datos
-- FastAPI : Procesamiento de los parámetros de funciones
-- Uvicorn : Servidor de API's
-- Render : Deployment del modelo
+En el archivo **main.py**, se creará una interfaz utilizando la biblioteca **FastAPI y Uvicorn**. Esta interfaz permitirá a los usuarios interactuar con el modelo de Machine Learning, proporcionando los datos de entrada necesarios y obteniendo las predicciones correspondientes.
 
-**Procesos para la realización del Proyecto en base a los principales entregables:**
+### 4. Desarrollo del Modelo de Machine Learning ( _enlace:_ [model.py ](https://github.com/abelfranco/PI_ML/blob/master/model.py))
 
-#### 1. Deployment de API´s que procesan funciones de acuerdo a consultas específicas predefinidas:
+En el archivo **model.py**, se implementará un modelo de Machine Learning utilizando **Similitud de cosenos**. Este modelo se entrenó utilizando los datos preprocesados y preparados durante el EDA (archivo **ds_model.csv**).Finalmente se realizó el deployemnt de la aplicación usando [RENDER ](https://dashboard.render.com/web/srv-cijd6sd9aq01qqirngrg).
 
-#### 2. Deployment de un Sistema de Recomenadación de Películas usando un modelo de clasificación
+---
+- _"Cada etapa fué realizada de manera sistemática y documentada adecuadamente en los archivos correspondientes, siguiendo las mejores prácticas de ciencia de datos y ML Operations, para garantizar la reproducibilidad, calidad y mantenibilidad del proyecto"_
+---
+## Stack Tecnológico
+- Scikit learn:
+- Python:
+- Numpy:
+- Pandas:
+- FastAPI:
+- Uvicorn:
+- Render:
