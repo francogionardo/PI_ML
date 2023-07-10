@@ -52,7 +52,7 @@ En el archivo **model.py**, se implementará un modelo de Machine Learning utili
   <div style="width:50%; padding-right:20px;">
     <h2>Herramientas Utilizadas</h2>
     <ul style="text-align: justify;">
-      <li><b>📊 Scikit Learn</b>: Utilizado para vectorizar, tokenizar y calcular la similitud coseno.</li>
+      <li><b>📊Scikit Learn</b>: Utilizado para vectorizar, tokenizar y calcular la similitud coseno.</li>
       <li><b>🐍Python</b>: Lenguaje de programación principal utilizado en el desarrollo del proyecto.</li>
       <li><b>💻Numpy</b>: Utilizado para realizar operaciones numéricas y manipulación de datos.</li>
       <li><b>🐼Pandas</b>: Utilizado para la manipulación y análisis de datos estructurados.</li>
