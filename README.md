@@ -7,7 +7,7 @@
 </p>
 
 <h2 align='center'>
-  Proyecto Individual I 🎬🍿
+  Proyecto Individual I 🎬
 </h2>
 
 
@@ -29,13 +29,16 @@ En este proyecto de Machine Learning, asumiré el rol de un Data Engineer y ML O
 
 En el archivo **ETL.py**, se llevó a cabo el proceso de extracción de datos de dos fuentes, la transformación de los datos para su limpieza y preprocesamiento, y finalmente la carga de los datos en un formato adecuado (archivo **ds_clean.csv**) para su posterior análisis y entrenamiento del modelo. (tambien ver **data_dictionary.md**)
 
-### 2. Análisis Exploratorio de Datos ( _enlace:_ [EDA ](https://github.com/abelfranco/PI_ML/blob/master/EDA.ipynb))
+
+### 2. Implementación de API´s ( _enlace:_ [main.py ](https://github.com/abelfranco/PI_ML/blob/master/main.py))
+
+En el archivo **main.py**, se creará una interfaz utilizando la biblioteca **FastAPI y Uvicorn**. Esta interfaz permitirá a los usuarios interactuar con el modelo de Machine Learning, proporcionando los datos de entrada necesarios y obteniendo las predicciones correspondientes.
+
+
+### 3. Análisis Exploratorio de Datos ( _enlace:_ [EDA ](https://github.com/abelfranco/PI_ML/blob/master/EDA.ipynb))
 
 En el notebook **EDA.ipynb**, se realizará un **`INFORME`** de Análisis exhaustivo de los datos y la factiblidad de modelos de clasificación para el caso en estudio. Esto incluirá la visualización de los datos, reducción de dimensionalidad, tratamiento de valores atípicos y la generación de conclusiones relevantes entorno a las variables y la elección del modelo.
 
-### 3. Implementación de API´s ( _enlace:_ [main.py ](https://github.com/abelfranco/PI_ML/blob/master/main.py))
-
-En el archivo **main.py**, se creará una interfaz utilizando la biblioteca **FastAPI y Uvicorn**. Esta interfaz permitirá a los usuarios interactuar con el modelo de Machine Learning, proporcionando los datos de entrada necesarios y obteniendo las predicciones correspondientes.
 
 ### 4. Desarrollo del Modelo de Machine Learning ( _enlace:_ [model.py ](https://github.com/abelfranco/PI_ML/blob/master/model.py))
 
@@ -69,19 +72,19 @@ En el archivo **model.py**, se implementará un modelo de Machine Learning utili
 
 ## Links
 
-- [API´s de consultas de películas y modelo de sistema de recomendación](https://movies-recomendation-system-bgw9.onrender.com/docs#/)
+- [API´s de consultas de películas y Modelo de sistema de recomendación](https://movies-recomendation-system-bgw9.onrender.com/docs#/)
 - [Videotutorial del trabajo realizado en YouTube](#)
 
 ## Recomendaciones
 
 - Al hacer las consultas Usar la primera letra de cada palabra en mayusculas.
 - No hacer uso de caracteres especiales.
-- Para la función `peliculas_idioma`, ingresar solamente las abreviaturas del idioma (por ejemplo, "inglés" sería "en").
+- Para la función **peliculas_idioma**, ingresar solamente las abreviaturas del idioma (por ejemplo, "inglés" sería "en").
 
 ## Autor
 
 Abel Franco Ccapa
 
-- Correo electrónico: franco.gionardo@gmail.com
+- Correo electrónico: abel.ccapa@tecsup.edu.pe
 
 - LinkedIn: [Perfil de LinkedIn](https://www.linkedin.com/in/abelfrancoccapa)
