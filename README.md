@@ -2,9 +2,7 @@
   Desarrollo de un Modelo de Clasificación para un Sistema de Recomendación de Películas
 </h1>
 
-<p align="center">
-  <img src="Image/logo.png" alt="Logo del Proyecto" style="float:right; width:80px;" />
-</p>
+<p align="center"></p>
 
 <h2 align='center'>
   Proyecto Individual I 🎬
